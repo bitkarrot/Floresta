@@ -1,9 +1,9 @@
 import os
 import subprocess
 import time
-from tqdm import tqdm
 
-BASE_DIR = "/tmp/data"
+
+BASE_DIR = "/tmp/floresta/"
 
 tests = ["example_test", "restart"]
 
@@ -14,7 +14,7 @@ def main():
     if not os.path.isdir(data_dir):
         os.makedirs(data_dir)
     print("Running tests")
-    for test_name in tqdm(tests):
+    for test_name in tests:
         test_dir = "./tests/" + test_name
         log_dir = data_dir + test_name.replace(".py", ".log")
         log_file = open(log_dir, "wt")
@@ -22,7 +22,7 @@ def main():
                                 stdout=log_file, stderr=log_file)
         test.wait()
         if test.returncode != 0:
-            print(f"Test {test_name} not passed")
+            print(f"Test {test_name} not passed, see {log_dir} for details")
         else:
             print(f"Test {test_name} passed")
 

@@ -12,9 +12,10 @@ class TestFramework:
     def run_node(self, datadir: str, net: str):
         node = subprocess.Popen([
             "cargo", "run", "--", "--network",
-            net, "run", "--rpc-host", "http://localhost:8080",
+            net, "run",
             "--data-dir", datadir
         ])
+
         self.nodes.append(node)
 
     def run_rpc(self):
@@ -32,5 +33,9 @@ class TestFramework:
     def run_test(self):
         raise NotImplemented
 
+    def cleanup(self):
+        raise NotImplemented
+
     def main(self):
         self.run_test()
+        self.cleanup()
